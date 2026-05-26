@@ -1,8 +1,11 @@
 <script setup>
 import { formataPreco } from '@/utils/produtoUtils';
 import ButtonChild from './buttonChild.vue';
-
+import produtoDialog from './produtoDialog.vue';
+import { ref } from 'vue';
+import { editar } from '@/utils/editar';
  defineProps(['id', 'nome', 'preco', 'imagem', 'categoria']);
+ const mostrarDialog = ref(false);
 </script>
 
 <template>
@@ -14,7 +17,8 @@ import ButtonChild from './buttonChild.vue';
         <div>
             <img :src="imagem" :alt="nome" class="produto-imagem">
         </div>
-        <ButtonChild>Editar</ButtonChild>
+        <ButtonChild @clique="mostrarDialog=true">Editar</ButtonChild>
+        <produtoDialog v-if="mostrarDialog" :nome="nome" :preco="preco" :id="id" :categoria="categoria" :key="id" @fechar="editar(id,preco)" @editar="mostrarDialog=false"</produtoDialog>
     </div>
 </template>
 
